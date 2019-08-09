@@ -28,7 +28,7 @@ public class SampleController {
     @RequestMapping("/hello/thymeleaf")
     public String thymeleaf(Model model) {
         model.addAttribute("name","arno");
-        return "sys/hello";
+        return "hello";
     }
 
     @RequestMapping("/db/get")
