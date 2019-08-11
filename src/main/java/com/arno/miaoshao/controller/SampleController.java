@@ -1,6 +1,7 @@
 package com.arno.miaoshao.controller;
 
 import com.arno.miaoshao.domain.User;
+import com.arno.miaoshao.redis.RedisService;
 import com.arno.miaoshao.result.Result;
 import com.arno.miaoshao.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,10 @@ public class SampleController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private RedisService redisService;
+
+
     @RequestMapping("/hello")
     @ResponseBody
     public Result<String> home() {
@@ -43,5 +48,20 @@ public class SampleController {
     public Result<Boolean> dbTx(){
         boolean bol = userService.tx();
         return Result.success(bol);
+    }
+
+    @RequestMapping("/redis/get")
+    @ResponseBody
+    public Result<Long> redisGet(){
+        Long key1 = redisService.get("key1", Long.class);
+        return Result.success(key1);
+    }
+
+
+    @RequestMapping("/redis/set")
+    @ResponseBody
+    public Result<Boolean> redisSet(){
+        boolean key1 = redisService.set("key2", "arno");
+        return Result.success(key1);
     }
 }
