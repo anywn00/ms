@@ -2,6 +2,7 @@ package com.arno.miaoshao.controller;
 
 import com.arno.miaoshao.domain.User;
 import com.arno.miaoshao.redis.RedisService;
+import com.arno.miaoshao.redis.keys.UserKey;
 import com.arno.miaoshao.result.Result;
 import com.arno.miaoshao.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,8 +53,8 @@ public class SampleController {
 
     @RequestMapping("/redis/get")
     @ResponseBody
-    public Result<Long> redisGet(){
-        Long key1 = redisService.get("key1", Long.class);
+    public Result<String> redisGet(){
+        String key1 = redisService.get(UserKey.getById,"key1", String.class);
         return Result.success(key1);
     }
 
@@ -61,7 +62,7 @@ public class SampleController {
     @RequestMapping("/redis/set")
     @ResponseBody
     public Result<Boolean> redisSet(){
-        boolean key1 = redisService.set("key2", "arno");
+        boolean key1 = redisService.set(UserKey.getById,"key1", "arno");
         return Result.success(key1);
     }
 }

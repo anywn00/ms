@@ -1,6 +1,7 @@
 package com.arno.miaoshao.redis;
 
 import com.alibaba.fastjson.JSON;
+import com.arno.miaoshao.redis.keys.KeyPrefix;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,10 +22,11 @@ public class RedisService {
     private JedisPool jedisPool;
 
 
-    public <T> T get(String key, Class<T> clazz){
+    public <T> T get(KeyPrefix keyPrefix, String key, Class<T> clazz){
         Jedis jedis = null;
         try{
             jedis = jedisPool.getResource();
+            key = keyPrefix.getKeyPrefix() + key;
             String str = jedis.get(key);
             T t = stringToBean(str, clazz);
             return t;
@@ -34,7 +36,7 @@ public class RedisService {
     }
 
 
-    public <T> boolean set(String key, T val){
+    public <T> boolean set(KeyPrefix keyPrefix,String key, T val){
         Jedis jedis = null;
         try{
             jedis = jedisPool.getResource();
@@ -42,7 +44,14 @@ public class RedisService {
             if(str == null) {
                 return false;
             }
-            jedis.set(key, str);
+            key = keyPrefix.getKeyPrefix() + key;
+            int ex = keyPrefix.expireSeconds();
+            if(ex <= 0) {
+                jedis.set(key, str);
+            } else {
+                jedis.setex(key,keyPrefix.expireSeconds(), str);
+            }
+
             return true;
         }finally {
             returnJedis(jedis);
