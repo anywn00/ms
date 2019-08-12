@@ -16,20 +16,22 @@ public class UserService {
     @Autowired
     private UserDao userDao;
 
-    public User getById(int id){
+    public User getById(long id){
         return userDao.getById(id);
     }
+
+
 
     @Transactional
     public boolean tx() {
         User user = new User();
         user.setId(2);
-        user.setName("222");
+        user.setNickname("222");
         userDao.insert(user);
 
         User user1 = new User();
         user1.setId(1);
-        user1.setName("111");
+        user1.setNickname("111");
         userDao.insert(user);
         return true;
     }

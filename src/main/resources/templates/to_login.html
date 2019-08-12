@@ -87,6 +87,12 @@
             },
             success: function (data) {
                 console.log(data)
+                if(data.code == 0) {
+                    window.location.href = "/goods/to_list";
+                } else {
+                    layer.msg(data.msg)
+                }
+
             },
             error: function () {
                 layer.closeAll();

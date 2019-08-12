@@ -1,11 +1,20 @@
 package com.arno.miaoshao.controller;
 
 import com.arno.miaoshao.domain.User;
+import com.arno.miaoshao.exception.GlobalException;
+import com.arno.miaoshao.result.CodeMsg;
+import com.arno.miaoshao.result.Result;
+import com.arno.miaoshao.service.MiaoShaoUserService;
 import com.arno.miaoshao.service.UserService;
+import com.arno.miaoshao.util.Md5Util;
 import com.arno.miaoshao.vo.UserVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @Author Arno
@@ -16,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LogInController {
 
     @Autowired
-    private UserService userService;
+    private MiaoShaoUserService miaoShaoUserService;
     @RequestMapping("to_login")
     public String toLogIn() {
         return "to_login";
@@ -24,10 +33,10 @@ public class LogInController {
 
 
     @RequestMapping("do_login")
-    public void doLogin(UserVo userVo) {
-        System.out.println(userVo.toString());
-        User user = userService.getByMobile(userVo.getMobile());
-
+    @ResponseBody
+    public Result<String> doLogin(UserVo userVo, HttpServletResponse response) {
+        String token = miaoShaoUserService.doLogin(userVo,response);
+        return Result.success(token);
     }
 
 

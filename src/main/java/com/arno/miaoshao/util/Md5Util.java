@@ -33,7 +33,8 @@ public class Md5Util {
 
 
     public static void main(String[] args) {
-        System.out.println(inputPassToFormPass("111222"));
+        String password = inputPassToFormPass("111222");
+        System.out.println(inputPassToDbPass(password, salt));
     }
 
 }
