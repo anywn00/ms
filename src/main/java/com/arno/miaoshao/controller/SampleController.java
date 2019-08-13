@@ -1,6 +1,6 @@
 package com.arno.miaoshao.controller;
 
-import com.arno.miaoshao.domain.User;
+import com.arno.miaoshao.domain.MiaoshaUser;
 import com.arno.miaoshao.redis.RedisUtil;
 import com.arno.miaoshao.redis.keys.UserKey;
 import com.arno.miaoshao.result.Result;
@@ -39,8 +39,8 @@ public class SampleController {
 
     @RequestMapping("/db/get")
     @ResponseBody
-    public Result<User> dbGet(){
-        User u = userService.getById(1);
+    public Result<MiaoshaUser> dbGet(){
+        MiaoshaUser u = userService.getById(1);
         return Result.success(u);
     }
 

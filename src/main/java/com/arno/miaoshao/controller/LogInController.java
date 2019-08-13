@@ -1,12 +1,7 @@
 package com.arno.miaoshao.controller;
 
-import com.arno.miaoshao.domain.User;
-import com.arno.miaoshao.exception.GlobalException;
-import com.arno.miaoshao.result.CodeMsg;
 import com.arno.miaoshao.result.Result;
-import com.arno.miaoshao.service.MiaoShaoUserService;
-import com.arno.miaoshao.service.UserService;
-import com.arno.miaoshao.util.Md5Util;
+import com.arno.miaoshao.service.MiaoShaUserService;
 import com.arno.miaoshao.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LogInController {
 
     @Autowired
-    private MiaoShaoUserService miaoShaoUserService;
+    private MiaoShaUserService miaoShaoUserService;
     @RequestMapping("to_login")
     public String toLogIn() {
         return "to_login";

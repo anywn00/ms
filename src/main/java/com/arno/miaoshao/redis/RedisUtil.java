@@ -27,7 +27,7 @@ public class RedisUtil {
         Jedis jedis = null;
         try{
             jedis = jedisPool.getResource();
-            key = keyPrefix.getKeyPrefix() + key;
+            key = keyPrefix.getKeyPrefix() + ":" + key;
             String str = jedis.get(key);
             T t = stringToBean(str, clazz);
             return t;

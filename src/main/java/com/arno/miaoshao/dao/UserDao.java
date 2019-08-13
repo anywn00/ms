@@ -1,6 +1,6 @@
 package com.arno.miaoshao.dao;
 
-import com.arno.miaoshao.domain.User;
+import com.arno.miaoshao.domain.MiaoshaUser;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -14,8 +14,8 @@ import org.apache.ibatis.annotations.Select;
 public interface UserDao {
 
     @Select("select * from miaosha_user where id = #{id}")
-    User getById(@Param("id") long id);
+    MiaoshaUser getById(@Param("id") long id);
 
     @Insert("insert into miaosha_user(id,pick_name)values(#{id},#{pickName})")
-    void insert( User user);
+    void insert( MiaoshaUser miaoshaUser);
 }

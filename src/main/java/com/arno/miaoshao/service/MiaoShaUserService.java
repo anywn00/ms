@@ -1,9 +1,8 @@
 package com.arno.miaoshao.service;
 
 import com.arno.miaoshao.dao.UserDao;
-import com.arno.miaoshao.domain.User;
+import com.arno.miaoshao.domain.MiaoshaUser;
 import com.arno.miaoshao.exception.GlobalException;
-import com.arno.miaoshao.redis.RedisUserService;
 import com.arno.miaoshao.redis.keys.UserKey;
 import com.arno.miaoshao.result.CodeMsg;
 import com.arno.miaoshao.util.Md5Util;
@@ -21,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  * @date 2019-08-12 22:00
  */
 @Service
-public class MiaoShaoUserService {
+public class MiaoShaUserService {
     @Autowired
     private UserDao userDao;
 
@@ -42,14 +41,14 @@ public class MiaoShaoUserService {
         if(StringUtils.isBlank(password)) {
             throw new GlobalException(CodeMsg.PASSWORD_EMPTY);
         }
-        User user = userDao.getById(Long.parseLong(mobile));
-        if(user == null) {
+        MiaoshaUser miaoshaUser = userDao.getById(Long.parseLong(mobile));
+        if(miaoshaUser == null) {
             //手机号码不存在
             throw new GlobalException(CodeMsg.MOBILE_EXIST);
         }
 
-        String dbPassword = user.getPassword();
-        String md5Password = Md5Util.inputPassToDbPass(password, user.getSalt());
+        String dbPassword = miaoshaUser.getPassword();
+        String md5Password = Md5Util.inputPassToDbPass(password, miaoshaUser.getSalt());
         if(!StringUtils.equals(md5Password, dbPassword)) {
             //密码错误
             throw new GlobalException(CodeMsg.PASSWORD_EXIST);
@@ -67,7 +66,7 @@ public class MiaoShaoUserService {
         response.addCookie(cookie);
 
         //将用户信息 存储到redis
-        redisUserService.saveUser(token,user);
+        redisUserService.saveUser(token, miaoshaUser);
         return token;
     }
 

@@ -6,7 +6,7 @@ import java.util.Date;
  * @Author arno
  * @date 2019-08-07 22:09
  */
-public class User {
+public class MiaoshaUser {
     private long id;
     private String nickname;
     private String password;

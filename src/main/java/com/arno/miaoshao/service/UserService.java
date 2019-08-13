@@ -1,7 +1,7 @@
 package com.arno.miaoshao.service;
 
 import com.arno.miaoshao.dao.UserDao;
-import com.arno.miaoshao.domain.User;
+import com.arno.miaoshao.domain.MiaoshaUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +16,7 @@ public class UserService {
     @Autowired
     private UserDao userDao;
 
-    public User getById(long id){
+    public MiaoshaUser getById(long id){
         return userDao.getById(id);
     }
 
@@ -24,15 +24,15 @@ public class UserService {
 
     @Transactional
     public boolean tx() {
-        User user = new User();
-        user.setId(2);
-        user.setNickname("222");
-        userDao.insert(user);
+        MiaoshaUser miaoshaUser = new MiaoshaUser();
+        miaoshaUser.setId(2);
+        miaoshaUser.setNickname("222");
+        userDao.insert(miaoshaUser);
 
-        User user1 = new User();
-        user1.setId(1);
-        user1.setNickname("111");
-        userDao.insert(user);
+        MiaoshaUser miaoshaUser1 = new MiaoshaUser();
+        miaoshaUser1.setId(1);
+        miaoshaUser1.setNickname("111");
+        userDao.insert(miaoshaUser);
         return true;
     }
 }
