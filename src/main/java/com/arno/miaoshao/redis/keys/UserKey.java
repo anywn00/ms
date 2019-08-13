@@ -6,11 +6,15 @@ package com.arno.miaoshao.redis.keys;
  */
 public class UserKey extends BasePrefix {
 
-
+    public UserKey(String token) {
+        super(token);
+    }
     UserKey(String key, int expireSeconds) {
         super(key, expireSeconds);
     }
 
     public static UserKey getById = new UserKey("id", 60);
+    public static UserKey userTokenKey = new UserKey("user_token",30 * 60);
+
 
 }

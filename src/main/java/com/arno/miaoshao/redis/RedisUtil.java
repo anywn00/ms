@@ -5,6 +5,7 @@ import com.arno.miaoshao.redis.keys.KeyPrefix;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -13,8 +14,8 @@ import redis.clients.jedis.JedisPool;
  * @Author arno
  * @date 2019-08-11 17:30
  */
-@Service
-public class RedisService {
+@Repository
+public class RedisUtil {
 
     @Autowired
     private RedisConfig redisConfig;
@@ -44,7 +45,7 @@ public class RedisService {
             if(str == null) {
                 return false;
             }
-            key = keyPrefix.getKeyPrefix() + key;
+            key = keyPrefix.getKeyPrefix() + ":" + key;
             int ex = keyPrefix.expireSeconds();
             if(ex <= 0) {
                 jedis.set(key, str);

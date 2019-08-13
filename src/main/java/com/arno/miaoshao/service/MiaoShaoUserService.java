@@ -3,13 +3,14 @@ package com.arno.miaoshao.service;
 import com.arno.miaoshao.dao.UserDao;
 import com.arno.miaoshao.domain.User;
 import com.arno.miaoshao.exception.GlobalException;
+import com.arno.miaoshao.redis.RedisUserService;
+import com.arno.miaoshao.redis.keys.UserKey;
 import com.arno.miaoshao.result.CodeMsg;
 import com.arno.miaoshao.util.Md5Util;
 import com.arno.miaoshao.util.UUIDUtil;
 import com.arno.miaoshao.vo.UserVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
@@ -23,6 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 public class MiaoShaoUserService {
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private RedisUserService redisUserService;
 
 
     public String doLogin(UserVo userVo, HttpServletResponse response) {
@@ -54,11 +58,16 @@ public class MiaoShaoUserService {
         //登录成功
         //生成token
         String token = UUIDUtil.getId();
-        //设置cokie
-        Cookie cookie = new Cookie("token", token);
+
+        //设置cookie
+        Cookie cookie = new Cookie(UserKey.userTokenKey.getKeyPrefix(), token);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
+        cookie.setMaxAge(UserKey.userTokenKey.getExpireSeconds());
         response.addCookie(cookie);
+
+        //将用户信息 存储到redis
+        redisUserService.saveUser(token,user);
         return token;
     }
 

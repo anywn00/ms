@@ -22,7 +22,7 @@ public abstract class BasePrefix implements KeyPrefix{
     @Override
     public String getKeyPrefix() {
         String simpleName = getClass().getSimpleName();
-        return simpleName + ":" + key;
+        return simpleName + "_" + key;
     }
 
     @Override
@@ -31,7 +31,7 @@ public abstract class BasePrefix implements KeyPrefix{
     }
 
 
-    public String getKey() {
+    private String getKey() {
         return key;
     }
 

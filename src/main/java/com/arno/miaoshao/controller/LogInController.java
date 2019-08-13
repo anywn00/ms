@@ -8,12 +8,12 @@ import com.arno.miaoshao.service.MiaoShaoUserService;
 import com.arno.miaoshao.service.UserService;
 import com.arno.miaoshao.util.Md5Util;
 import com.arno.miaoshao.vo.UserVo;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -34,7 +34,7 @@ public class LogInController {
 
     @RequestMapping("do_login")
     @ResponseBody
-    public Result<String> doLogin(UserVo userVo, HttpServletResponse response) {
+    public Result<String> doLogin(UserVo userVo, HttpServletResponse response, HttpServletRequest request) {
         String token = miaoShaoUserService.doLogin(userVo,response);
         return Result.success(token);
     }
