@@ -25,12 +25,12 @@ public class UserService {
     @Transactional
     public boolean tx() {
         MiaoshaUser miaoshaUser = new MiaoshaUser();
-        miaoshaUser.setId(2);
+        miaoshaUser.setId(2l);
         miaoshaUser.setNickname("222");
         userDao.insert(miaoshaUser);
 
         MiaoshaUser miaoshaUser1 = new MiaoshaUser();
-        miaoshaUser1.setId(1);
+        miaoshaUser1.setId(1l);
         miaoshaUser1.setNickname("111");
         userDao.insert(miaoshaUser);
         return true;

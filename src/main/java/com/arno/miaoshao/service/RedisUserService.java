@@ -26,6 +26,10 @@ public class RedisUserService {
             return null;
         }
 
-        return redisUtil.get(UserKey.userTokenKey,token, MiaoshaUser.class);
+        MiaoshaUser miaoshaUser = redisUtil.get(UserKey.userTokenKey, token, MiaoshaUser.class);
+        if(miaoshaUser != null) {
+            saveUser(token, miaoshaUser);
+        }
+        return miaoshaUser;
     }
 }
