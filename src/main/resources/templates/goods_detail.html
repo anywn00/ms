@@ -74,7 +74,7 @@
         var remainSeconds = $('#remainSeconds').val();
         var closeTime;
         if(remainSeconds > 0){ //秒杀未开始
-            $('#buybutton').attr('disabled', false);
+            $('#buybutton').attr('disabled', true);
             //倒计时
             var countDownSeconds = $('#countDown').text();
             closeTime = setTimeout(function () {
@@ -83,12 +83,14 @@
                 countDown();
             },1000)
         } else if(remainSeconds < 0) { //秒杀结束
-            $('#buybutton').attr('disabled', false);
-        } else { //秒杀进行中
             $('#buybutton').attr('disabled', true);
+            $('#miaoshaTip').html('秒杀结束');
+        } else { //秒杀进行中
+            $('#buybutton').attr('disabled', false);
             if(closeTime) {
-                clearTimeout(closeTime)
+                clearTimeout(closeTime);
             }
+            $('#miaoshaTip').html('秒杀进行中');
         }
     }
 </script>

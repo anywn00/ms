@@ -19,6 +19,11 @@ public class CodeMsg {
     public static CodeMsg PASSWORD_EMPTY = new CodeMsg(500202,"密码不能为空");
     public static CodeMsg PASSWORD_EXIST = new CodeMsg(500203,"密码错误");
 
+
+    //5003XX秒杀商品异常
+    public static CodeMsg GOODS_STOCK_NUM = new CodeMsg(500300, "商品没库存了，已被秒杀完了");
+    public static CodeMsg GOODS_NOT_REPEAT = new CodeMsg(500300, "不能重复秒杀");
+
     private CodeMsg(int code, String msg) {
         this.code = code;
         this.msg = msg;

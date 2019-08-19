@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 
@@ -38,6 +38,10 @@ public class GoodsController {
         model.addAttribute("miaoshaUser",miaoshaUser);
 
         long startTime = goodsVo.getStartDate().getTime();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String a = formatter.format(goodsVo.getStartDate());
+
         long endTime = goodsVo.getEndDate().getTime();
         long now = System.currentTimeMillis();
 
