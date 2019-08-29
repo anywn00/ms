@@ -32,24 +32,7 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
-        HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
-        String token = getCookieToken(request);
-        if(token == null) {
-            return null;
-        }
-        return redisUserService.getUserByToken(token);
+        return RequestHolder.getUser();
     }
 
-    private String getCookieToken(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        if(cookies == null || cookies.length == 0) {
-            return null;
-        }
-        for (Cookie cookie : cookies) {
-            if(StringUtils.equals(cookie.getName(), UserKey.userTokenKey.getKeyPrefix())){
-                return cookie.getValue();
-            }
-        }
-        return null;
-    }
 }

@@ -1,5 +1,6 @@
 package com.arno.miaoshao.controller;
 
+import com.arno.miaoshao.asset.AccessLimit;
 import com.arno.miaoshao.domain.MiaoshaUser;
 import com.arno.miaoshao.service.GoodsService;
 import com.arno.miaoshao.vo.GoodsVo;
@@ -24,6 +25,7 @@ public class GoodsController {
     @Autowired
     private GoodsService goodsService;
     @RequestMapping("to_list")
+    @AccessLimit(require = true, maxCount = 5, seconds = 60)
     public String list(MiaoshaUser miaoshaUser, Model model){
         List<GoodsVo> goodsVoList = goodsService.listGoodsVo();
         model.addAttribute("goodsVoList", goodsVoList);

@@ -58,6 +58,18 @@ public class RedisUtil {
             returnJedis(jedis);
         }
     }
+
+    public Long incr(KeyPrefix prefix, String key) {
+        String realKey = prefix.getKeyPrefix() + ":" + key;
+        Jedis jedis = null;
+        try {
+            jedis = jedisPool.getResource();
+            return jedis.incr(realKey);
+        }finally {
+            returnJedis(jedis);
+        }
+    }
+
     private <T> T stringToBean(String str, Class<T> aClass){
         if(str == null) {
             return null;
